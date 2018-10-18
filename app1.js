@@ -28,19 +28,22 @@ Vue.component('news-list', {
             <table class="ui very basic padded striped four column table accordion">
                         <p>{{ amounts }} results shown out of {{ amount }} {{ selected }} projects </p>
                         <thead>
-                                <tr>
-                                        <th class="thirteen wide">Titel</th>
-                                        <th class="one wide">Veröffentlichung</th>
-                                        <th class="one wide">Ort</th>
-                                        <!--            <th class="one wide">Kategorie</th> -->
-                                        <th class="one wide">Quelle</th>
-                                        <th class="one wide">Cockpit</th>
-                                </tr>
+                            
+                                <th class="thirteen wide">Titel</th>
+                                <th class="one wide">Veröffentlichung</th>
+                                <th class="one wide">Ort</th>
+                                <!--            <th class="one wide">Kategorie</th> -->
+                                <th class="one wide">Quelle</th>
+                                <th class="one wide">Cockpit</th>
+                            </tr>
                         </thead>
                         <tbody>
                             <div v-for="posts in processedPosts">
                                 <div v-for="post in posts">
+                                <hr>
+                                
                                     <tr>
+                                        
                                         <td>
                                             <div class="title">
                                             <a :href="post.url" target="_blank"><b>{{ post.title }}</b></a>
@@ -49,7 +52,7 @@ Vue.component('news-list', {
                                                 <div class="ui relaxed divided items">
                                                     <div class="item">
                                                         <div class="description">
-                                                            {{ post.description }}
+                                                            {{ post.description.slice(0,350) }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -58,9 +61,22 @@ Vue.component('news-list', {
                                                         <div class="description">
                                                             Category: <b>{{ post.bereich.group }}</b>
                                                         </div>
+                                                        <div class="description">
+                                                            Sub-Category: <b>{{ post.bereich.group_type }}</b>
+                                                        </div>
+                                                        <div class="description">
+                                                            Date Posted: <b>{{ post.date_post }}</b>
+                                                        </div>
+                                                        <div class="description">
+                                                            Bundesland <b>{{ post.region.bundesland }}</b>, Stadt: <b>{{ post.region.stadt }}</b>
+                                                        </div>
+                                        
+
+
                                                     </div>
                                                 </div>
                                             </div>
+                                            
                                         </td>
                                     </tr>
                                 </div>
