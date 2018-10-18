@@ -62,31 +62,38 @@
               <h5 class="text-center">Filter by Category</h5>
               <form>
                 <div class="row">
-                  <div class="large-6 columns">
-                    <select v-model="section">
+                  <div class="large-12 columns">
+                    <div class="btn-group btn-group-justified" v-model="section">
+                          <a @click="getPosts('Development')" class="btn btn-primary" style="width:50%">Development</a>
+                          <a @click="getPosts('Infrastructure')" class="btn btn-info" style="width:30%">Infrastructure</a>
+                          <a @click="getPosts('Data Science')" class="btn btn-warning" style="width:15%">Data Science</a>
+                    </div>
+                   <!-- <select v-model="section">
                       <option v-for="section in sections" :value="section">{{ section }}</option>
                     </select>
+                  -->
                   </div>
-                  <div class="large-6 columns">
-                        <select v-model="section">
-                         
-                          <option v-for="section in sections" :value="section">{{ section }}</option>
-                          
-                        </select>
+                  <hr>
+                  <div class="large-12 columns" v-if="dev">
+                    <select>
+                      <option v-for="sub in subDev1" :value="sub">{{ sub }}</option>
+                    </select>
                   </div>
-                  <div class="large-6 columns">
-                        <select v-model="section">
-                          <option v-for="section in sections" :value="section">{{ section }}</option>
-                        </select>
+                  <div class="large-12 columns" v-else-if="inf">
+                    <select>
+                        <option v-for="sub in subInf1" :value="sub">{{ sub }}</option>
+                    </select>
                   </div>
-                  <div class="large-6 columns">
-                        <select v-model="section">
-                          <option v-for="section in sections" :value="section">{{ section }}</option>
-                        </select>
+                  <div class="large-12 columns" v-else-if="ds">
+                      <select>
+                          <option v-for="sub in subDs1" :value="sub">{{ sub }}</option>
+                      </select>
                   </div>
+                  <!-- 
                   <div class="medium-6 columns center-block" >
                     <a @click="getPosts(section)" class="button expanded">Retrieve</a>
                   </div>
+                  -->
                 </div>
               </form>
             </section>

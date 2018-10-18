@@ -113,7 +113,19 @@ const vm = new Vue({
     data: {
         results: [],
         sections: SECTIONS.split(', '), // create an array of the sections
+        subDev1: subDev.split(', '),
+        subInf1: subInf.split(', '),
+        subDs1: subDs.split(', '),
         section: 'home', // set default section to 'home'
+        dev: false,
+        inf: false,
+        ds: false,
+        selected: [],
+        options: [
+        { text: 'Development', value: this.subDev1 },
+        { text: 'Infrastructure', value: this.subInf1 },
+        { text: 'Data Science', value: this.subDs1 }
+        ]
     },
     mounted() {
         this.getPosts(this.section);
@@ -124,16 +136,28 @@ const vm = new Vue({
             //let url = buildUrl(section) + "/Web";
             let url
             if (section === "home") {
-                buildUrl(section);
+               url = buildUrl(section);
+               
             }
             else if (section === "Development") {
-                buildUrl(section) + "/" + subDev
+                url = buildUrl(section);
+                console.log(section)
+                this.inf = false;
+                this.ds = false;
+                this.dev = true;
             }
             else if (section === "Infrastructure") {
-                buildUrl(section) + "/" + subInf
+               url = buildUrl(section);
+               this.dev = false;
+               this.ds = false;
+               this.inf = true;
+
             }
             else if (section === "Data Science") {
-                buildUrl(section) + "/" + subDs
+               url = buildUrl(section);
+               this.dev = false;
+               this.inf = false;
+               this.ds = true;
             }
             console.log(url)
             axios.get(url).then((response) => {
