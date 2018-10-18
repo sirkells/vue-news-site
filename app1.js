@@ -12,12 +12,17 @@
     }
   });*/
 
-const SECTIONS = "Development/Web, Infrastructure, Data Science";
+const SECTIONS = "Development, Infrastructure, Data Science";
+const subDev = "Web, Mobile";
+const subInf = "ERP, IT Admin/Services";
+const subDs = "Big Data, Business Intelligence, Machine Learning";
+
 
 const BaseUrl = "http://127.0.0.1:5000/";
 
 
 function buildUrl(url) {
+    
     return BaseUrl + url
 }
 
@@ -63,6 +68,7 @@ Vue.component('news-list', {
                                                             Category: <b>{{ post.bereich.group }}</b>
                                                         </div>
                                                         <div class="description">
+                                                        
                                                             Sub-Category: <b>{{ post.bereich.group_type }}</b>
                                                         </div>
                                                         <div class="description">
@@ -114,7 +120,22 @@ const vm = new Vue({
     },
     methods: {
         getPosts(section) {
-            let url = buildUrl(section);
+            //let url = section === "home"? buildUrl(section) : buildUrl(section) + "/" + sub;
+            //let url = buildUrl(section) + "/Web";
+            let url
+            if (section === "home") {
+                buildUrl(section);
+            }
+            else if (section === "Development") {
+                buildUrl(section) + "/" + subDev
+            }
+            else if (section === "Infrastructure") {
+                buildUrl(section) + "/" + subInf
+            }
+            else if (section === "Data Science") {
+                buildUrl(section) + "/" + subDs
+            }
+            console.log(url)
             axios.get(url).then((response) => {
                 this.results = response.data;
             }).catch(error => { console.log(error); });
