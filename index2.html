@@ -67,7 +67,22 @@
                       <option v-for="section in sections" :value="section">{{ section }}</option>
                     </select>
                   </div>
-                  <div class="medium-6 columns">
+                  <div class="large-6 columns">
+                        <select v-model="section">
+                          <option v-for="section in sections" :value="section">{{ section }}</option>
+                        </select>
+                  </div>
+                  <div class="large-6 columns">
+                        <select v-model="section">
+                          <option v-for="section in sections" :value="section">{{ section }}</option>
+                        </select>
+                  </div>
+                  <div class="large-6 columns">
+                        <select v-model="section">
+                          <option v-for="section in sections" :value="section">{{ section }}</option>
+                        </select>
+                  </div>
+                  <div class="medium-6 columns center-block" >
                     <a @click="getPosts(section)" class="button expanded">Retrieve</a>
                   </div>
                 </div>

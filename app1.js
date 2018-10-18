@@ -12,7 +12,7 @@
     }
   });*/
 
-const SECTIONS = "Development, Infrastructure, Data Science";
+const SECTIONS = "Development/Web, Infrastructure, Data Science";
 
 const BaseUrl = "http://127.0.0.1:5000/";
 
@@ -26,7 +26,7 @@ Vue.component('news-list', {
     template: `
         <section>
             <table class="ui very basic padded striped four column table accordion">
-                        <p>{{ amounts }} results shown out of {{ amount }} {{ selected }} projects </p>
+                        
                         <thead>
                             
                                 <th class="thirteen wide">Titel</th>
@@ -48,6 +48,7 @@ Vue.component('news-list', {
                                             <div class="title">
                                             <a :href="post.url" target="_blank"><b>{{ post.title }}</b></a>
                                             </div>
+                                            <p>{{ post[amount]}} results shown out of {{ amount }} {{ selected }} projects </p>
                                             <div class="content">
                                                 <div class="ui relaxed divided items">
                                                     <div class="item">
