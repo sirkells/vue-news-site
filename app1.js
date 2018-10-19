@@ -17,6 +17,7 @@ const subDev = "Web, Mobile";
 const subInf = "ERP, IT Admin/Services";
 const subDs = "Big Data, Business Intelligence, Machine Learning";
 const devWeb = "Fullstack, Backend, Frontend"
+const class_buttons = "btn btn-primary, btn btn-info, btn btn-warning"
 //var country_selected = document.getElementById("Sub");
 
 const BaseUrl = "http://127.0.0.1:5000/";
@@ -113,12 +114,15 @@ const vm = new Vue({
     el: '#app',
     data: {
         results: [],
+        section1: [{group: "Development", button: "btn btn-primary", width: "width:50%"}, {group: "Infrastructure", button:"btn btn-info", width: "width:30%"}, {group:"Data Science", button: "btn btn-warning", width: "width:20%"}],
         sections: SECTIONS.split(', '), // create an array of the sections
+        class_buttons1: class_buttons.split(', '),
         subDev1: subDev.split(', '),
         subInf1: subInf.split(', '),
         subDs1: subDs.split(', '),
         devSub: devWeb.split(', '),
         section: 'home', // set default section to 'home'
+        isActive: true,
         devSub1: false,
         dev: false,
         inf: false,
