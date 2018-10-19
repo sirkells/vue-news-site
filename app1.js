@@ -16,7 +16,8 @@ const SECTIONS = "Development, Infrastructure, Data Science";
 const subDev = "Web, Mobile";
 const subInf = "ERP, IT Admin/Services";
 const subDs = "Big Data, Business Intelligence, Machine Learning";
-
+const devWeb = "Fullstack, Backend, Frontend"
+//var country_selected = document.getElementById("Sub");
 
 const BaseUrl = "http://127.0.0.1:5000/";
 
@@ -53,7 +54,7 @@ Vue.component('news-list', {
                                             <div class="title">
                                             <a :href="post.url" target="_blank"><b>{{ post.title }}</b></a>
                                             </div>
-                                            <p>{{ post[amount]}} results shown out of {{ amount }} {{ selected }} projects </p>
+                                            
                                             <div class="content">
                                                 <div class="ui relaxed divided items">
                                                     <div class="item">
@@ -116,7 +117,9 @@ const vm = new Vue({
         subDev1: subDev.split(', '),
         subInf1: subInf.split(', '),
         subDs1: subDs.split(', '),
+        devSub: devWeb.split(', '),
         section: 'home', // set default section to 'home'
+        devSub1: false,
         dev: false,
         inf: false,
         ds: false,
@@ -125,7 +128,10 @@ const vm = new Vue({
         { text: 'Development', value: this.subDev1 },
         { text: 'Infrastructure', value: this.subInf1 },
         { text: 'Data Science', value: this.subDs1 }
-        ]
+        ],
+        total_project_count: 0,
+        current_project_count: 0
+
     },
     mounted() {
         this.getPosts(this.section);
@@ -159,9 +165,23 @@ const vm = new Vue({
                this.inf = false;
                this.ds = true;
             }
+            else if (section === "Development/Web") {
+                url = buildUrl(section);
+                console.log(section)
+                this.inf = false;
+                this.ds = false;
+                this.dev = true;
+                this.devSub1 = true;
+            }
             console.log(url)
             axios.get(url).then((response) => {
-                this.results = response.data;
+                this.results = response.data.project_lists;
+                this.total_project_count = response.data.amount
+                this.current_project_count = response.data.amount2
+                console.log(this.total_project_count)
+                console.log(this.current_project_count)
+                console.log(this.results)
+                //console.log((response.data.project_lists).length)
             }).catch(error => { console.log(error); });
         }
     }
