@@ -18,6 +18,9 @@ const subInf = "ERP, IT Admin/Services";
 const subDs = "Big Data, Business Intelligence, Machine Learning";
 const devWeb = "Fullstack, Backend, Frontend"
 const class_buttons = "btn btn-primary, btn btn-info, btn btn-warning"
+let cat1 = 50;
+let cat2 = 10;
+let cat3 = 10;
 //var country_selected = document.getElementById("Sub");
 
 const BaseUrl = "http://127.0.0.1:5000/";
@@ -114,13 +117,16 @@ const vm = new Vue({
     el: '#app',
     data: {
         results: [],
-        section1: [{group: "Development", button: "btn btn-primary", width: "width:50%"}, {group: "Infrastructure", button:"btn btn-info", width: "width:30%"}, {group:"Data Science", button: "btn btn-warning", width: "width:20%"}],
+        section1: [{group: "Development", button: "btn btn-primary", width: "width:" + cat1 + "%"}, {group: "Infrastructure", button:"btn btn-info", width: "width:" + cat2 + "%"}, {group:"Data Science", button: "btn btn-warning", width: "width:" + cat3 + "%"}],
         sections: SECTIONS.split(', '), // create an array of the sections
         class_buttons1: class_buttons.split(', '),
         subDev1: subDev.split(', '),
         subInf1: subInf.split(', '),
         subDs1: subDs.split(', '),
         devSub: devWeb.split(', '),
+        catdev: cat1,
+        catinf: cat2,
+        catds: cat3,
         section: 'home', // set default section to 'home'
         isActive: true,
         devSub1: false,
@@ -147,46 +153,91 @@ const vm = new Vue({
             let url
             if (section === "home") {
                url = buildUrl(section);
+               console.log(url)
+               axios.get(url).then((response) => {
+                this.results = response.data.project_lists;
+                this.total_project_count = response.data.amount
+                this.current_project_count = response.data.amount2
+                this.cat1 = (100 * this.current_project_count)/this.total_project_count
+                console.log(this.total_project_count)
+                console.log(this.current_project_count)
+                console.log(this.cat1)
+                //console.log((response.data.project_lists).length)
+                }).catch(error => { console.log(error); });
                
             }
             else if (section === "Development") {
                 url = buildUrl(section);
+                console.log(url)
                 console.log(section)
                 this.inf = false;
                 this.ds = false;
                 this.dev = true;
+                axios.get(url).then((response) => {
+                    this.results = response.data.project_lists;
+                    //this.total_project_count = response.data.amount
+                    this.current_project_count = response.data.amount2
+                    this.cat1 = (100 * this.current_project_count)/this.total_project_count
+                    console.log(this.total_project_count)
+                    console.log(this.current_project_count)
+                    console.log(this.cat1)
+                    //console.log((response.data.project_lists).length)
+                }).catch(error => { console.log(error); });
             }
             else if (section === "Infrastructure") {
                url = buildUrl(section);
+               console.log(url)
                this.dev = false;
                this.ds = false;
                this.inf = true;
+               axios.get(url).then((response) => {
+                this.results = response.data.project_lists;
+                this.total_project_count = response.data.amount
+                this.current_project_count = response.data.amount2
+                this.cat1 = (100 * this.current_project_count)/this.total_project_count
+                console.log(this.total_project_count)
+                console.log(this.current_project_count)
+                console.log(this.cat1)
+                //console.log((response.data.project_lists).length)
+                }).catch(error => { console.log(error); });
 
             }
             else if (section === "Data Science") {
                url = buildUrl(section);
+               console.log(url)
                this.dev = false;
                this.inf = false;
                this.ds = true;
+               axios.get(url).then((response) => {
+                this.results = response.data.project_lists;
+                this.total_project_count = response.data.amount
+                this.current_project_count = response.data.amount2
+                this.cat1 = (100 * this.current_project_count)/this.total_project_count
+                console.log(this.total_project_count)
+                console.log(this.current_project_count)
+                console.log(this.cat1)
+                //console.log((response.data.project_lists).length)
+            }).catch(error => { console.log(error); });
             }
             else if (section === "Development/Web") {
                 url = buildUrl(section);
+                console.log(url)
                 console.log(section)
                 this.inf = false;
                 this.ds = false;
                 this.dev = true;
                 this.devSub1 = true;
+                axios.get(url).then((response) => {
+                    this.results = response.data.project_lists;
+                    this.total_project_count = response.data.amount
+                    this.current_project_count = response.data.amount2
+                    this.cat1 = (100 * this.current_project_count)/this.total_project_count
+                    console.log(this.total_project_count)
+                    console.log(this.current_project_count)
+                    console.log(this.cat1)
+                    //console.log((response.data.project_lists).length)
+                }).catch(error => { console.log(error); });
             }
-            console.log(url)
-            axios.get(url).then((response) => {
-                this.results = response.data.project_lists;
-                this.total_project_count = response.data.amount
-                this.current_project_count = response.data.amount2
-                console.log(this.total_project_count)
-                console.log(this.current_project_count)
-                console.log(this.results)
-                //console.log((response.data.project_lists).length)
-            }).catch(error => { console.log(error); });
         }
     }
 });
