@@ -18,9 +18,21 @@ const subInf = "ERP, IT Admin/Services";
 const subDs = "Big Data, Business Intelligence, Machine Learning";
 const devWeb = "Fullstack, Backend, Frontend"
 const class_buttons = "btn btn-primary, btn btn-info, btn btn-warning"
-let cat1 = 50;
-let cat2 = 10;
-let cat3 = 10;
+var cat1 = 50;
+var cat2 = 30;
+var cat3 = 20;
+var total = 0;
+var currentdev = 0;
+var currentinf = 0;
+var currentds = 0;
+var thestyle = [{group: "Development", button: "btn btn-primary", width: "width:", count: this.catdev, pix:"%"}, {group: "Infrastructure", button:"btn btn-info", width: "width:", count: cat2, pix:"%"}, {group:"Data Science", button: "btn btn-warning", width: "width:", count: cat3, pix:"%"}]
+
+
+    //let url = section === "home"? buildUrl(section) : buildUrl(section) + "/" + sub;
+    //let url = buildUrl(section) + "/Web";
+    
+
+
 //var country_selected = document.getElementById("Sub");
 
 const BaseUrl = "http://127.0.0.1:5000/";
@@ -30,6 +42,7 @@ function buildUrl(url) {
     
     return BaseUrl + url
 }
+
 
 Vue.component('news-list', {
     props: ['results'],
@@ -109,24 +122,33 @@ Vue.component('news-list', {
                 chunkedArray[j] = posts.slice(i, i + chunk);
             }
             return chunkedArray;
+        },
+        running() {
+            let section2 = [{group: "Development", button: "btn btn-primary", width: "width:", count: this.catdev, pix:"%"}, {group: "Infrastructure", button:"btn btn-info", width: "width:", count: cat2, pix:"%"}, {group:"Data Science", button: "btn btn-warning", width: "width:", count: cat3, pix:"%"}]
+            return section2
         }
     }
 });
 
-const vm = new Vue({
+
+var vm = new Vue({
     el: '#app',
     data: {
+        dev_project_count : 0,
+        inf_project_count : 0,
+        ds_project_count : 0,
         results: [],
-        section1: [{group: "Development", button: "btn btn-primary", width: "width:" + cat1 + "%"}, {group: "Infrastructure", button:"btn btn-info", width: "width:" + cat2 + "%"}, {group:"Data Science", button: "btn btn-warning", width: "width:" + cat3 + "%"}],
+        catdev: 50,
+        catinf: cat2,
+        catds: cat3,
+        section1: [{name: 'Development', group: "Development", button: "btn btn-primary", width: "width:", count: 50, pix:"%"}, {name: 'Infrastructure', group: "Infrastructure", button:"btn btn-info", width: "width:", count: 30, pix:"%"}, {name: 'Data Sc', group:"Data Science", button: "btn btn-warning", width: "width:", count: 20, pix:"%"}],
         sections: SECTIONS.split(', '), // create an array of the sections
         class_buttons1: class_buttons.split(', '),
         subDev1: subDev.split(', '),
         subInf1: subInf.split(', '),
         subDs1: subDs.split(', '),
         devSub: devWeb.split(', '),
-        catdev: cat1,
-        catinf: cat2,
-        catds: cat3,
+        
         section: 'home', // set default section to 'home'
         isActive: true,
         devSub1: false,
@@ -139,8 +161,15 @@ const vm = new Vue({
         { text: 'Infrastructure', value: this.subInf1 },
         { text: 'Data Science', value: this.subDs1 }
         ],
-        total_project_count: 0,
-        current_project_count: 0
+
+        styleObject: {
+            color: 'red',
+            font: '100px'
+          },
+        width1: "width: 50%",
+        gg: 1
+        
+
 
     },
     mounted() {
@@ -150,18 +179,37 @@ const vm = new Vue({
         getPosts(section) {
             //let url = section === "home"? buildUrl(section) : buildUrl(section) + "/" + sub;
             //let url = buildUrl(section) + "/Web";
+            
             let url
             if (section === "home") {
                url = buildUrl(section);
                console.log(url)
                axios.get(url).then((response) => {
+                let a = 10
+                this.gg = a
                 this.results = response.data.project_lists;
                 this.total_project_count = response.data.amount
-                this.current_project_count = response.data.amount2
-                this.cat1 = (100 * this.current_project_count)/this.total_project_count
-                console.log(this.total_project_count)
-                console.log(this.current_project_count)
-                console.log(this.cat1)
+                console.log(this.section1[0])
+                this.section1[0].count = (100 * response.data.amount2[0])/this.total_project_count
+                this.section1[1].count = (100 * response.data.amount2[1])/this.total_project_count
+                //if ((100 * response.data.amount2[2])/this.total_project_count) < 12) {}
+                this.section1[2].count = ((100 * response.data.amount2[2])/this.total_project_count)
+                this.section1[2].count +=5
+                
+
+
+                
+                console.log(this.section1[0].count)
+                console.log(this.section1[1].count)
+                console.log(this.section1[2].count)
+                
+                //this.cat1 = (100 * this.current_project_count)/this.total_project_count
+                /*console.log(this.total_project_count)
+                console.log(this.dev_project_count)
+                console.log(this.inf_project_count)
+                console.log(this.ds_project_count)
+
+                console.log(this.gg)*/
                 //console.log((response.data.project_lists).length)
                 }).catch(error => { console.log(error); });
                
@@ -176,7 +224,7 @@ const vm = new Vue({
                 axios.get(url).then((response) => {
                     this.results = response.data.project_lists;
                     //this.total_project_count = response.data.amount
-                    this.current_project_count = response.data.amount2
+                    this.current_project_count = response.data.amount2[0]
                     this.cat1 = (100 * this.current_project_count)/this.total_project_count
                     console.log(this.total_project_count)
                     console.log(this.current_project_count)
@@ -193,11 +241,11 @@ const vm = new Vue({
                axios.get(url).then((response) => {
                 this.results = response.data.project_lists;
                 this.total_project_count = response.data.amount
-                this.current_project_count = response.data.amount2
+                this.current_project_count = response.data.amount2[1]
                 this.cat1 = (100 * this.current_project_count)/this.total_project_count
                 console.log(this.total_project_count)
                 console.log(this.current_project_count)
-                console.log(this.cat1)
+                console.log(this.gg)
                 //console.log((response.data.project_lists).length)
                 }).catch(error => { console.log(error); });
 
@@ -211,7 +259,7 @@ const vm = new Vue({
                axios.get(url).then((response) => {
                 this.results = response.data.project_lists;
                 this.total_project_count = response.data.amount
-                this.current_project_count = response.data.amount2
+                this.current_project_count = response.data.amount2[2]
                 this.cat1 = (100 * this.current_project_count)/this.total_project_count
                 console.log(this.total_project_count)
                 console.log(this.current_project_count)
@@ -241,3 +289,23 @@ const vm = new Vue({
         }
     }
 });
+//var myStringArray = ["Hello","World"];
+
+
+
+
+/*for (var i in vm.section1){
+    let dev = vm.section1[0]
+    let inf = vm.section1[1]
+    let ds = vm.section1[2]
+    let dev_count = vm.dev_project_count
+    let inf_count = vm.inf_project_count
+    let ds_count = vm.ds_project_count
+    Vue.set(dev, 'count', dev_count)
+    Vue.set(inf, 'count', inf_count)
+    Vue.set(ds, 'count', ds_count)
+    
+    console.log(vm.dev_project_count)
+}*/
+
+

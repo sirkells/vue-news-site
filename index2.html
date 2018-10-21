@@ -70,8 +70,9 @@
                     </div>
                     -->
                     <br>
-                    <div class="btn-group btn-group-justified" role="group"  >
-                      <a v-for="sub in section1" @click="getPosts(sub.group)" :class="sub.button" :style="sub.width">{{ sub.group }}</a>
+                    
+                    <div class="btn-group btn-group-justified" role="group">
+                      <a v-for="sub in section1" @click="getPosts(sub.group)" :class="sub.button" :style="sub.width + sub.count + sub.pix">{{ sub.name }}</a>
                     </div>
                    <!-- <select v-model="section">
                       <option v-for="section in sections" :value="section">{{ section }}</option>
