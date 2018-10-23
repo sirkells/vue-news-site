@@ -141,7 +141,7 @@ var vm = new Vue({
         catdev: 50,
         catinf: cat2,
         catds: cat3,
-        section1: [{name: 'Development', group: "Development", button: "btn btn-primary", width: "width:", count: 50, pix:"%"}, {name: 'Infrastructure', group: "Infrastructure", button:"btn btn-info", width: "width:", count: 30, pix:"%"}, {name: 'Data Sc', group:"Data Science", button: "btn btn-warning", width: "width:", count: 20, pix:"%"}],
+        section1: [{name: 'Development', group: "Development", button: "btn btn-primary", width: "width:", count: 50, pix:"%"}, {name: 'Infrastructure', group: "Infrastructure", button:"btn btn-info", width: "width:", count: 30, pix:"%"}, {name: 'Data Sci', group:"Data Science", button: "btn btn-warning", width: "width:", count: 20, pix:"%"}],
         sections: SECTIONS.split(', '), // create an array of the sections
         class_buttons1: class_buttons.split(', '),
         subDev1: subDev.split(', '),
